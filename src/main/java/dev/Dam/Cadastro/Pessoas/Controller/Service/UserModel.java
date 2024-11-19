@@ -1,12 +1,15 @@
-package dev.Dam.Cadastro;
+package dev.Dam.Cadastro.Pessoas.Controller.Service;
 
+import dev.Dam.Cadastro.Tasks.TasksModel;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 //Entity ele transforma uma classe em ma entidade no Banco de Dados
 //JPA = Java Persistence API
 @Entity
 @Table(name = "tb_cadastro")
-public class PessoaModel {
+public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,10 +18,15 @@ public class PessoaModel {
     private String email;
     private int age;
 
-    public PessoaModel() {
+    //@ManyToOne - O usuário só pode ter uma única task
+    @ManyToOne
+    @JoinColumn(name = "tasks_id") //Foreing key ou chave es
+    private TasksModel tasks;
+
+    public UserModel() {
     }
 
-    public PessoaModel(String name, String email, int age) {
+    public UserModel(String name, String email, int age) {
         this.name = name;
         this.email = email;
         this.age = age;

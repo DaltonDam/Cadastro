@@ -1,10 +1,10 @@
-package dev.Dam.Cadastro;
+package dev.Dam.Cadastro.Pessoas.Controller.Service;
 
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping
-public class PessoaController {
+public class UserController {
 
     @GetMapping("/boasvindas")
     public String boasVindas() {
