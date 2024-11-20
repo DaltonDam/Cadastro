@@ -22,7 +22,10 @@ public class UserModel {
     private Long id;
 
     private String name;
+
+    @Column(unique = true) //Cada email se torna único
     private String email;
+
     private int age;
 
     //@ManyToOne - O usuário só pode ter uma única task
