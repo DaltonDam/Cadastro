@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-//Entity ele transforma uma classe em ma entidade no Banco de Dados
+//Entity ele transforma uma classe em uma entidade no Banco de Dados
 //JPA = Java Persistence API
 @Entity
 @Table(name = "tb_cadastro")
@@ -19,13 +19,19 @@ public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "id")
     private Long id;
 
+    @Column (name = "name")
     private String name;
 
     @Column(unique = true) //Cada email se torna único
     private String email;
 
+    @Column (name = "img_url")
+    private String imgUrl;
+
+    @Column (name = "age")
     private int age;
 
     //@ManyToOne - O usuário só pode ter uma única task
