@@ -1,6 +1,5 @@
-package dev.Dam.Cadastro.Pessoas.Controller.Service;
+package dev.Dam.Cadastro.Tasks;
 
-import dev.Dam.Cadastro.Tasks.TasksModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 //Manda tudo pro banco de dados ORM
