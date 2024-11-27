@@ -3,7 +3,7 @@ package dev.Dam.Cadastro.Pessoas.Controller.Service;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/usuarios")
 public class UserController {
 
     @GetMapping("/boasvindas")
@@ -12,19 +12,19 @@ public class UserController {
     }
 
     // Adicionar usuário (CREATE)
-    @PostMapping("/adicionar")
+    @PostMapping("/criar")
     public String criateUser() {
         return "Usuário criado";
     }
 
     // Mostrar todos os usuários (READ)
-    @GetMapping("/todos")
+    @GetMapping("/listar")
     public String showAllUsers() {
         return "Mostrar usuário";
     }
 
     // Procurar usuário por ID (READ)
-    @GetMapping("/todosID")
+    @GetMapping("/listarID")
     public String showAllUsersByID() {
         return "Mostrar usuário por id";
     }
