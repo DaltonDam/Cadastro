@@ -2,9 +2,17 @@ package dev.Dam.Cadastro.Pessoas.Controller.Service;
 
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.util.List;
+
+@RestController //para dizer que é a camada controller
 @RequestMapping("/usuarios")
 public class UserController {
+
+    private UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/boasvindas")
     public String boasVindas() {
@@ -19,8 +27,8 @@ public class UserController {
 
     // Mostrar todos os usuários (READ)
     @GetMapping("/listar")
-    public String showAllUsers() {
-        return "Mostrar usuário";
+    public List<UserModel> listUsers() {
+        return userService.listUsers();
     }
 
     // Procurar usuário por ID (READ)
