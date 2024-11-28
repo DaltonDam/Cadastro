@@ -1,5 +1,6 @@
 package dev.Dam.Cadastro.Tasks;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.Dam.Cadastro.Pessoas.Controller.Service.UserModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class TasksModel {
 
     //@OneToMany - Muitos usuarios para mesma task
     @OneToMany(mappedBy = "tasks")
+    @JsonIgnore //Ignora a serialização
     private List<UserModel> users;
 
 
