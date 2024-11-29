@@ -5,14 +5,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+//SERVICE É A CAMADA DE LÓGICA
+
 //@Autowired //Construtor
 @Service // Indica que esta é uma camada de serviço
 public class UserService {
     private UserRepository userRepository;
+    private UserMapper userMapper;
 
-    // Injeta o repositório via construtor
-    public UserService(UserRepository repository) {
-        this.userRepository = repository;
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     // Lista todos os usuários
@@ -27,8 +30,10 @@ public class UserService {
     }
 
     //Criar um novo ninja
-    public UserModel createUser(UserModel user) {
-        return userRepository.save(user);
+    public UserDTO createUser(UserDTO userDTO) {
+        UserModel user = userMapper.map(userDTO);
+        user = userRepository.save(user);
+        return userMapper.map(user);
     }
 
     //Deletar usuário - Tem que ser um método void
