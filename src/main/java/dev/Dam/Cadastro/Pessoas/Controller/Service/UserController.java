@@ -1,5 +1,6 @@
 package dev.Dam.Cadastro.Pessoas.Controller.Service;
 
+import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,9 +40,11 @@ public class UserController {
     }
 
     // Alterar dados dos usuários (UPDATE)
-    @PutMapping("/alterarID")
-    public String changeUsersByID() {
-        return "Alterar usuário por id";
+    // Sempre que o usuario for passar uma variável, tem que isar chaves
+    //E também o @PathVariable
+    @PutMapping("/alterar/{id}")
+    public UserModel changeUsersByID(@PathVariable Long id, @RequestBody UserModel updatedUser) {
+        return userService.updateUser(id, updatedUser);
     }
 
     // Deletar usuários (DELETE)

@@ -36,4 +36,13 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    //Atualizar usuário
+    public UserModel updateUser(Long id, UserModel updatedUser) {
+        if(userRepository.existsById(id)) {
+            updatedUser.setId(id); //.setId - Só funciona se instalar o plugin do lombok
+            return userRepository.save(updatedUser);
+        }
+        return null;
+
+    }
 }
