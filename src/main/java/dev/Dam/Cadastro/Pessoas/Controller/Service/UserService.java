@@ -31,4 +31,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    //Deletar usuário - Tem que ser um método void
+    public void deleteUsersByID(Long id) {
+        userRepository.deleteById(id);
+    }
+
 }

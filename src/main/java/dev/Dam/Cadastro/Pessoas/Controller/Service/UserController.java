@@ -45,9 +45,10 @@ public class UserController {
     }
 
     // Deletar usuários (DELETE)
-    @DeleteMapping("/deletarID")
-    public String deleteUsersByID() {
-        return "Usuário deletado  por id";
+    //@PathVariable - Serve para colocar uma variávio que o usuário deseja inserir
+    @DeleteMapping("/deletar/{id}")
+    public void deleteUsersByID(@PathVariable Long id) {
+        userService.deleteUsersByID(id);
     }
 
 }
