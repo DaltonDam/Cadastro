@@ -21,8 +21,8 @@ public class UserController {
 
     // Adicionar usuário (CREATE)
     @PostMapping("/criar")
-    public String criateUser() {
-        return "Usuário criado";
+    public UserModel criateUser(@RequestBody UserModel user) {
+        return userService.createUser(user);
     }
 
     // Mostrar todos os usuários (READ)
@@ -31,10 +31,11 @@ public class UserController {
         return userService.listUsers();
     }
 
+    //localhost
     // Procurar usuário por ID (READ)
-    @GetMapping("/listarID")
-    public String showAllUsersByID() {
-        return "Mostrar usuário por id";
+    @GetMapping("/listar/{id}")
+    public UserModel showAllUsersByID(@PathVariable Long id) {
+        return userService.listUserByID(id);
     }
 
     // Alterar dados dos usuários (UPDATE)
