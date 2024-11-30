@@ -1,6 +1,5 @@
 package dev.Dam.Cadastro.Pessoas.Controller.Service;
 
-import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,14 +27,14 @@ public class UserController {
 
     // Mostrar todos os usuários (READ)
     @GetMapping("/listar")
-    public List<UserModel> listUsers() {
+    public List<UserDTO> listUsers() {
         return userService.listUsers();
     }
 
     //localhost
     // Procurar usuário por ID (READ)
     @GetMapping("/listar/{id}")
-    public UserModel showAllUsersByID(@PathVariable Long id) {
+    public UserDTO showAllUsersByID(@PathVariable Long id) {
         return userService.listUserByID(id);
     }
 
@@ -43,7 +42,7 @@ public class UserController {
     // Sempre que o usuario for passar uma variável, tem que isar chaves
     //E também o @PathVariable
     @PutMapping("/alterar/{id}")
-    public UserModel changeUsersByID(@PathVariable Long id, @RequestBody UserModel updatedUser) {
+    public UserDTO changeUsersByID(@PathVariable Long id, @RequestBody UserDTO updatedUser) {
         return userService.updateUser(id, updatedUser);
     }
 
