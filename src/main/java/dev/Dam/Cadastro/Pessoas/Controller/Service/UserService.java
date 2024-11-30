@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+//SERVICE É A CAMADA DE LÓGICA
+
 //@Autowired //Construtor
 @Service // Indica que esta é uma camada de serviço
 public class UserService {
