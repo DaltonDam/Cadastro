@@ -34,6 +34,10 @@ public class UserModel {
     @Column (name = "age")
     private int age;
 
+    //AVISO: a criação desta coluno foi após o DTO
+    @Column (name = "rank")
+    private String rank;
+
     //@ManyToOne - O usuário só pode ter uma única task
     @ManyToOne
     @JoinColumn(name = "tasks_id") //Foreing key ou chave e strangeira

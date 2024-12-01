@@ -4,31 +4,40 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+//SERVICE É A CAMADA DE LÓGICA
 
 //@Autowired //Construtor
 @Service // Indica que esta é uma camada de serviço
 public class UserService {
     private UserRepository userRepository;
+    private UserMapper userMapper;
 
-    // Injeta o repositório via construtor
-    public UserService(UserRepository repository) {
-        this.userRepository = repository;
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     // Lista todos os usuários
-    public List<UserModel> listUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> listUsers() {
+        List<UserModel> users = userRepository.findAll();
+        return users.stream()
+                .map(userMapper::map)
+                .collect(Collectors.toList());
     }
 
     //Listar todos os users por ID
-    public UserModel listUserByID(Long id) {
-        Optional<UserModel> userModel = userRepository.findById(id);
-        return userModel.orElse(null);
+    public UserDTO listUserByID(Long id) {
+        Optional<UserModel> userById = userRepository.findById(id);
+        return userById.map(userMapper::map).orElse(null);
     }
 
     //Criar um novo ninja
-    public UserModel createUser(UserModel user) {
-        return userRepository.save(user);
+    public UserDTO createUser(UserDTO userDTO) {
+        UserModel user = userMapper.map(userDTO);
+        user = userRepository.save(user);
+        return userMapper.map(user);
     }
 
     //Deletar usuário - Tem que ser um método void
@@ -36,11 +45,15 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    //O antigo usava if and else
     //Atualizar usuário
-    public UserModel updateUser(Long id, UserModel updatedUser) {
-        if(userRepository.existsById(id)) {
-            updatedUser.setId(id); //.setId - Só funciona se instalar o plugin do lombok
-            return userRepository.save(updatedUser);
+    public UserDTO updateUser(Long id, UserDTO userDTO) {
+        Optional<UserModel> existingUser = userRepository.findById(id);
+        if(existingUser.isPresent()) {
+            UserModel updatedUser = userMapper.map(userDTO);
+            updatedUser.setId(id);
+            UserModel savedUser = userRepository.save(updatedUser);
+            return userMapper.map(savedUser);
         }
         return null;
 
