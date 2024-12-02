@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Table(name = "tb_cadastro")
 @NoArgsConstructor //Lombok cria o construtor nas espreitas
 @AllArgsConstructor
+@ToString(exclude = "tasks")
 @Data //Todos os getters e os setters
 public class UserModel {
 
