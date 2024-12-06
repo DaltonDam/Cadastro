@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>User List</title>
+    <style>
+        /* Definir fontes e estilo global */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Cabeçalho */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 30px;
+        }
+
+        /* Botão de Adicionar Ninja */
+        .btn-add {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-add:hover {
+            background-color: #45a049;
+        }
+
+        /* Tabela */
+        table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            font-size: 16px;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        /* Imagem do usuário */
+        td img {
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            object-fit: cover;
+            width: 80px;
+            height: 80px;
+            max-width: 100%; /* Garantir que a imagem não ultrapasse o limite */
+            max-height: 100%; /* Manter a proporção */
+        }
+
+        /* Alinhar as ações */
+        td a {
+            color: #007BFF;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: 120px; /* Dando um espaço fixo para os botões */
+            text-align: center;
+        }
+
+        td a:hover {
+            background-color: #007BFF;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilo para o botão de deletar */
+        td a:nth-child(3) {
+            background-color: #f44336;
+            color: white;
+        }
+
+        td a:nth-child(3):hover {
+            background-color: #e53935;
+        }
+
+        /* Estilo para a coluna de tarefas */
+        td span {
+            font-weight: bold;
+            color: black; /* Corrigido para a cor preta */
+        }
+
+        /* Estilo para quando não houver tarefas */
+        td span:last-child {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+            }
+
+            th, td {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            td img {
+                width: 50px;
+                height: 50px;
+            }
+
+            td a {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Botão para Adicionar Ninja -->
+<a href="/usuarios/ui/adicionar" class="btn-add">Add Ninja</a>
+
+<h1>User List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Rank</th>
+        <th>Tasks</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${user}">
+        <td th:text="${user.id}"></td>
+        <td> <img th:src="${user.imgUrl}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.rank}"></td>
+
+        <td>
+            <!-- Verifica se o usuário tem tarefas -->
+            <span th:if="${user.tasks}">
+                    <span th:text="${user.tasks.name}"></span>,
+                    <span th:text="${user.tasks.difficulty}"></span>
+                </span>
+            <span th:if="${user.tasks == null}">No tasks registered for the user</span>
+        </td>
+
+        <td>
+            <a th:href="@{/usuarios/ui/detalhar/{id}(id=${user.id})}">View details</a>
+            <a th:href="@{/usuarios/ui/alterar/{id}(id=${user.id})}">Edit</a> |
+            <a th:href="@{/usuarios/ui/deletar/{id}(id=${user.id})}">Delete</a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
