@@ -33,8 +33,8 @@ public class UserController {
     // Mostrar todos os usuários (READ)
     @GetMapping("/listar")
     public ResponseEntity<List<UserDTO>> listUsers() {
-        List<UserDTO> users = userService.listUsers();
-        return ResponseEntity.ok(users);
+        List<UserDTO> user = userService.listUsers();
+        return ResponseEntity.ok(user);
     }
 
     //localhost

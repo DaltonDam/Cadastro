@@ -28,7 +28,7 @@ public class TasksModel {
     //@OneToMany - Muitos usuarios para mesma task
     @OneToMany(mappedBy = "tasks")
     @JsonIgnore //Ignora a serialização
-    private List<UserModel> users;
+    private List<UserModel> user;
 
 
 }

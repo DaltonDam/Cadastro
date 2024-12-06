@@ -21,8 +21,8 @@ public class UserService {
 
     // Lista todos os usuários
     public List<UserDTO> listUsers() {
-        List<UserModel> users = userRepository.findAll();
-        return users.stream()
+        List<UserModel> user = userRepository.findAll();
+        return user.stream()
                 .map(userMapper::map)
                 .collect(Collectors.toList());
     }
