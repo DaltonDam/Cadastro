@@ -1,5 +1,9 @@
 package dev.Dam.Cadastro.Pessoas.Controller.Service;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +21,19 @@ public class UserController {
     }
 
     @GetMapping("/boasvindas")
+    @Operation(summary = "Mensagem de boas vinda", description= "Essa rota da uma mensagem de boas vindas")
     public String boasVindas() {
         return "Esta é a primeira mensagem nessa rota";
     }
 
     // Adicionar usuário (CREATE)
     @PostMapping("/criar")
+    @Operation(summary = "Cria um novo usuário", description = "Essa rota cria um novo usuário e insere no banco de dados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Erro ao criar usuário")
+    })
+
     public ResponseEntity<String> createUser(@RequestBody UserDTO user) {
         UserDTO newUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -40,6 +51,11 @@ public class UserController {
     //localhost
     // Procurar usuário por ID (READ)
     @GetMapping("/listar/{id}")
+    @Operation(summary = "Lista o usuário por Id", description = "Essa rota lista um usuário pelo seu Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Usuário não encontrado")
+    })
     public ResponseEntity<?> showUsersByID(@PathVariable Long id) {
         UserDTO user = userService.listUserByID(id);
         if (user != null) {
@@ -55,7 +71,18 @@ public class UserController {
     // Sempre que o usuario for passar uma variável, tem que isar chaves
     //E também o @PathVariable
     @PutMapping("/alterar/{id}")
-    public ResponseEntity<?> changeUsersByID(@PathVariable Long id, @RequestBody UserDTO updatedUser) {
+    @Operation(summary = "Altera o usuário por Id", description = "Essa rota altera um usuário pelo seu Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário alterado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Usuário não encontrado, não foi possível alterar")
+    })
+
+    public ResponseEntity<?> changeUsersByID(
+            @Parameter(description = "Cliente mando o Id no caminho da requisição")
+            @PathVariable Long id,
+            @Parameter(description = "Cliente manda os dados do usuário a ser atualizado no no corpo da requisição")
+            @RequestBody UserDTO updatedUser) {
+
         UserDTO user = userService.updateUser(id, updatedUser);
         if(user != null) {
             return ResponseEntity.ok(user);
