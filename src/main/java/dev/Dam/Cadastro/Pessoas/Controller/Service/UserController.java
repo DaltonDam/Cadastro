@@ -43,6 +43,11 @@ public class UserController {
 
     // Mostrar todos os usuários (READ)
     @GetMapping("/listar")
+    @Operation(summary = "Lista todos os usuários", description = "Essa rota retorna todos os usuários cadastrados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de usuários retornada com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<List<UserDTO>> listUsers() {
         List<UserDTO> user = userService.listUsers();
         return ResponseEntity.ok(user);
@@ -78,7 +83,7 @@ public class UserController {
     })
 
     public ResponseEntity<?> changeUsersByID(
-            @Parameter(description = "Cliente mando o Id no caminho da requisição")
+            @Parameter(description = "Cliente manda o Id no caminho da requisição")
             @PathVariable Long id,
             @Parameter(description = "Cliente manda os dados do usuário a ser atualizado no no corpo da requisição")
             @RequestBody UserDTO updatedUser) {
@@ -95,6 +100,11 @@ public class UserController {
     // Deletar usuários (DELETE)
     //@PathVariable - Serve para colocar uma variávio que o usuário deseja inserir
     @DeleteMapping("/deletar/{id}")
+    @Operation(summary = "Deleta o usuário por Id", description = "Essa rota deleta um usuário pelo seu Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado, não foi possível deletar")
+    })
     public ResponseEntity<String> deleteUsersByID(@PathVariable Long id) {
         if(userService.listUserByID(id) != null) {
             userService.deleteUsersByID(id);
